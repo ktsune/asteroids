@@ -1,0 +1,16 @@
+<h1>Most Dangerous Day</h1>
+
+<%= facade.start_date %> - <%= facade.end_date %>
+
+<h3><%= facade.most_dangerous_day %> has <%= facade.asteroid_count %> potentialily dangerous near earth objects </h3>
+
+<section class='asteroids'>
+
+  <% facade.asteroid_list.each do |asteroid| %>
+    <ul class='asteroid'>
+      <li>Name: <%= asteroid[:name] %></li>
+      <li>NEO Reference ID: <%= asteroid[:neo_reference_id] %></li>
+    </ul>
+  <% end %>
+
+</section>
