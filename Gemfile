@@ -17,6 +17,7 @@ gem 'faraday'
 gem 'figaro'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'rspec-rails'
+gem 'fast_jsonapi'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

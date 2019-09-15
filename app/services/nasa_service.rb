@@ -12,7 +12,6 @@ class NasaService
 
   def self.most_dangerous_day(start_date, end_date)
     conn = Faraday.new(url: 'https://api.nasa.gov') do |f|
-      # f.headers['api_key'] = 'lPNSUDX7JbtY5b0xPfiq0mHs4iJxO0tKcBRYA3Qf'
       f.adapter  Faraday.default_adapter
     end
 
@@ -23,7 +22,9 @@ class NasaService
     # => most dangerous day in that range based on
     # => which day has the most `is_potentially_dangerous_asteroid`
     # => set to `true`
-
+    #binding.pry
+    p result[:near_earth_objects].nil?
+    result[:near_earth_objects].map { |d, v| p d }
     result[:near_earth_objects].max_by do |date, values|
       count_asteroids(values)
     end

@@ -4,6 +4,7 @@ class DangerousDay
   def initialize(start_date, end_date)
     @start_date = start_date
     @end_date = end_date
+    p 'new dangerous day'
   end
 
   def start_date
@@ -16,19 +17,22 @@ class DangerousDay
     start.strftime("%B %-d, %Y")
   end
 
+  def nasa_date(date)
+    Date.parse(date).strftime("%Y-%m-%d")
+  end
+
   def most_dangerous_day
-    NasaService.most_dangerous_day(@start_date, @end_date).first
+    @most_dangerous_day ||= NasaService.most_dangerous_day(nasa_date(@start_date), nasa_date(@end_date)).first
   end
 
   def asteroid_count
-    NasaService.asteroid_count_by_date(most_dangerous_day)
+    @asteroid_count ||= NasaService.asteroid_count_by_date(most_dangerous_day)
   end
 
   def asteroid_list
-    asteroids = NasaService.most_dangerous_day(@start_date, @end_date).last
-
+    asteroids = NasaService.most_dangerous_day(nasa_date(@start_date), nasa_date(@end_date)).last
     asteroids.select do |result|
       result[:is_potentially_hazardous_asteroid] == true
-    end 
+    end
   end
 end

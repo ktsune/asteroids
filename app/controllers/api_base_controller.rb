@@ -13,4 +13,3 @@ class ApiBaseController < ActionController::API
     @current_user ||= api_key.user if api_key
   end
 end
-
