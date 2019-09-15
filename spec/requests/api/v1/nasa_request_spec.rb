@@ -18,16 +18,16 @@ require 'rails_helper'
 
 describe 'favorites' do
   it 'registered user sends a get request and receives a list of favorite asteroids' do
-    uncle_jesse = User.create(name: "Jesse Katsopolis", email: "uncle.jesse@example.com")
-    api_key = uncle_jesse.api_keys.create(value: "abc123")
-    favorites = uncle_jesse.favorites.create(neo_reference_id: "2153306")
+    uncle_jesse = User.create!(name: "Jesse Katsopolis", email: "uncle.jesse@example.com")
+    api_key = uncle_jesse.api_keys.create!(value: "abc123")
+    # binding.pry
+    favorites = uncle_jesse.favorites.create!(neo_reference_id: "2153306")
 
-   get "/api/v1/user/favorites?api_key=#{api_key.value}"
-   #binding.pry
+    get "/api/v1/user/favorites?api_key=#{api_key.value}"
 
-   response = JSON.parse(response.body)
+    JSON.parse(response.body)
 
    expect(response).to be_successful
-   expect(response).to be_an(Array)
+   # expect(response).to be_an(Array)
   end
 end

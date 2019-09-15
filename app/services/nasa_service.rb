@@ -10,6 +10,15 @@ class NasaService
     count
   end
 
+  def find_asteroids_using_neo_id(neo_reference_id)
+    conn = Faraday.new(url: "https://api.nasa.gov") do |f|
+      f.adapter  Faraday.default_adapter
+    end
+
+    response = conn.get("/neo/rest/v1/neo/#{neo_reference_id}?api_key=lPNSUDX7JbtY5b0xPfiq0mHs4iJxO0tKcBRYA3Qf")
+    JSON.parse(response.body, symbolize_names: true)
+  end
+
   def self.most_dangerous_day(start_date, end_date)
     conn = Faraday.new(url: 'https://api.nasa.gov') do |f|
       f.adapter  Faraday.default_adapter
@@ -17,7 +26,6 @@ class NasaService
 
     response = conn.get("/neo/rest/v1/feed?start_date=#{start_date}&end_date=#{end_date}&api_key=lPNSUDX7JbtY5b0xPfiq0mHs4iJxO0tKcBRYA3Qf")
     result = JSON.parse(response.body, symbolize_names: true)
-    # binding.pry
 
     # => most dangerous day in that range based on
     # => which day has the most `is_potentially_dangerous_asteroid`
