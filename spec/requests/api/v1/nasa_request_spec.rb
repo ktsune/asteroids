@@ -25,9 +25,24 @@ describe 'favorites' do
 
     get "/api/v1/user/favorites?api_key=#{api_key.value}"
 
-    JSON.parse(response.body)
+    json_response = JSON.parse(response.body)
 
-   expect(response).to be_successful
-   # expect(response).to be_an(Array)
+    expect(response).to be_successful
+    expect(json_response).to be_an(Array)
+    expect(json_response[0]).to be_a(Hash)
+  end
+
+  it 'registered user can send a POST and favorite an asteroid' do
+    uncle_jesse = User.create!(name: "Jesse Katsopolis", email: "uncle.jesse@example.com")
+    api_key = uncle_jesse.api_keys.create!(value: "abc123")
+    favorites = uncle_jesse.favorites.create!(neo_reference_id: "2153306")
+
+    post "/api/v1/user/favorites?api_key=#{api_key.value}&neo_reference_id=#{favorites.neo_reference_id}"
+
+    json_response = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(json_response).to be_a(Hash)
+    expect(favorites.neo_reference_id).to eq("2153306")
   end
 end

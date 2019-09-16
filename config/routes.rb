@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :user do
         get "/favorites", to: "favorites#show"
+        post "/favorites", to: "favorites#create"
       end
     end
   end
